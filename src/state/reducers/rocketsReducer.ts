@@ -1,3 +1,4 @@
+import { initialState } from '../../constants';
 import { ActionTypes } from '../action-types/index';
 import { TActions } from '../actions/index';
 
@@ -7,7 +8,10 @@ interface IRocketsState {
   data: string[];
 }
 
-const reducer = (state: IRocketsState, action: TActions): IRocketsState => {
+const reducer = (
+  state: IRocketsState = initialState,
+  action: TActions
+): IRocketsState => {
   switch (action.type) {
     case ActionTypes.FETCH_ROCKETS:
       return { loading: true, error: null, data: [] };
