@@ -4,14 +4,44 @@ interface IRocketsState {
   data: string[];
 }
 
-const reducer = (state: IRocketsState, { type, payload }: any) => {
-  switch (type) {
-    case 'fetch_rockets':
+// interface IAction {
+//   type: string;
+//   payload?: any;
+// }
+
+interface FetchRocketsAction {
+  type: ActionTypes.FETCH_ROCKETS;
+}
+
+interface FetchRocketsSuccessAction {
+  type: ActionTypes.FETCH_ROCKETS_SUCCESS;
+  payload: string[];
+}
+
+interface FetchRocketsErrorAction {
+  type: ActionTypes.FETCH_ROCKETS_ERROR;
+  payload: string;
+}
+
+type TActions =
+  | FetchRocketsAction
+  | FetchRocketsSuccessAction
+  | FetchRocketsErrorAction;
+
+enum ActionTypes {
+  FETCH_ROCKETS = 'fetch_rockets',
+  FETCH_ROCKETS_SUCCESS = 'fetch_rockets_success',
+  FETCH_ROCKETS_ERROR = 'fetch_rockets_error',
+}
+
+const reducer = (state: IRocketsState, action: TActions): IRocketsState => {
+  switch (action.type) {
+    case ActionTypes.FETCH_ROCKETS:
       return { loading: true, error: null, data: [] };
-    case 'fetch_rockets_success':
-      return { loading: false, error: null, data: payload };
-    case 'fetch_rockets_error':
-      return { loading: false, error: payload, data: [] };
+    case ActionTypes.FETCH_ROCKETS_SUCCESS:
+      return { loading: false, error: null, data: action.payload };
+    case ActionTypes.FETCH_ROCKETS_ERROR:
+      return { loading: false, error: action.payload, data: [] };
     default:
       return state;
   }
