@@ -1,3 +1,8 @@
-// const reducer = (state, action) => {};
+import { combineReducers } from 'redux';
+import rocketsReducer from './rocketsReducer';
 
-// export default reducer;
+const reducers = combineReducers({
+  rockets: rocketsReducer,
+});
+
+export default reducers;
