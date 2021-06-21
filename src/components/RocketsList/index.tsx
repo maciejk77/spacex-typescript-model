@@ -1,5 +1,6 @@
 import { useActions } from '../../hooks/useActions';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
+import Button from '../Button';
 
 const RocketsList: React.FC = () => {
   const { fetchRockets } = useActions();
@@ -10,10 +11,22 @@ const RocketsList: React.FC = () => {
     fetchRockets();
   };
 
+  const canRender = !error && !loading;
+
   return (
     <>
-      <button onClick={handleClick}>ROCKETS</button>
-      {}
+      <Button onClick={handleClick} label="Rockets" />
+      {error && <h3>{error}</h3>}
+      {loading && <h3>Loading...</h3>}
+      {canRender &&
+        data.map((element) => (
+          <div
+            style={{ border: '1px dotted black', padding: 10, marginBottom: 5 }}
+            key={element}
+          >
+            {element}
+          </div>
+        ))}
     </>
   );
 };
